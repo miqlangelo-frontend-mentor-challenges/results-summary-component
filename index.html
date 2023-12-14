@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png" />
+
+        <title>Frontend Mentor | Results summary component</title>
+
+        <link rel="stylesheet" href="styles.css" />
+        <script>
+            document
+                .addEventListener("DOMContentLoaded", () => {
+                    fetch("data.json")
+                        .then((response) => response.json())
+                        .then((data) => {
+                            const list = document.getElementById("score-list");
+
+                            data.forEach((item) => {
+                                const li = document.createElement("li");
+                                li.className = item.category.toLowerCase();
+
+                                const img = document.createElement("img");
+                                img.src = item.icon;
+                                img.alt = `${item.category} Icon`;
+
+                                const span = document.createElement("span");
+                                span.className = "subject";
+                                span.textContent = item.category;
+
+                                const div = document.createElement("div");
+                                div.className = "score";
+
+                                const spanValue = document.createElement("span");
+                                spanValue.className = "value";
+                                spanValue.textContent = item.score;
+
+                                const spanSlash = document.createTextNode(" / 100");
+
+                                div.appendChild(spanValue);
+                                div.appendChild(spanSlash);
+
+                                li.appendChild(img);
+                                li.appendChild(span);
+                                li.appendChild(div);
+
+                                list.appendChild(li);
+                            });
+                        });
+                })
+                .catch((error) => console.error("Error loading the data:", error));
+        </script>
+    </head>
+    <body>
+        <main>
+            <div class="container">
+                <section class="card result">
+                    <h3>Your Result</h3>
+                    <div class="score">
+                        <span class="score-value">76</span>
+                        <span class="score-of">of 100</span>
+                    </div>
+                    <h2>Great</h2>
+                    <p>You scored higher than 65% of the people who have taken these tests.</p>
+                </section>
+
+                <section class="card summary">
+                    <h4>Summary</h4>
+                    <ul id="score-list"></ul>
+                    <button type="button">Continue</button>
+                </section>
+            </div>
+        </main>
+    </body>
+</html>
